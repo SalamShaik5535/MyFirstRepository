@@ -1,54 +1,48 @@
-package com.Spring.controller;
+package com.spring.controller;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.Spring.entity.User;
-import com.Spring.service.IUserService;
-
+import com.spring.entity.User;
+import com.spring.service.IUserService;
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/user")
 public class UserController {
 
 	@Autowired
-	public IUserService userService;
+	private IUserService userService;
 	
-	@PostMapping("/create")
+	
+	@PostMapping("/createUser")
 	public ResponseEntity<User> createUser(@RequestBody User user){
-	User u = userService.createUser(user);
-		return new ResponseEntity<>(u,HttpStatus.CREATED);
+		return ResponseEntity.ok(userService.createUser(user));
+		
 	}
-	
-	@GetMapping("/findAll")
-	public ResponseEntity<List<User>> findUsers(){
-		List<User> list = userService.listAll();
-		return new ResponseEntity<>(list,HttpStatus.OK);
+	@GetMapping("/listAllUsers")
+	public ResponseEntity<List<User>> listAllUsers(){
+		return ResponseEntity.ok(userService.findAllUsers());
 	}
-	
-	@GetMapping("/findById/{id}")
-	public ResponseEntity<User> findById(@PathVariable Long id){
-		return ResponseEntity.ok(userService.findUser(id));
-	}
-	
-	@PutMapping("/update/{id}")
-	public ResponseEntity<String> updateUser(@PathVariable Long id,@RequestBody User user){
+	@PatchMapping("/updateUser/{id}")
+	public ResponseEntity<String> updateUser(@PathVariable int id,@RequestBody User user){
 		return ResponseEntity.ok(userService.updateUser(id, user));
 	}
-	
-	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<String> deleteUser(@PathVariable Long id){
-		return ResponseEntity.ok(userService.deleteUser(id));
+	@GetMapping("/findUserById/{id}")
+	public ResponseEntity<User> findUserById(@PathVariable int id){
+		return ResponseEntity.ok(userService.findUserById(id));
+	}
+	@DeleteMapping("/deleteUserById/{id}")
+	public ResponseEntity<String> deleteUser(@PathVariable int id){
+		return ResponseEntity.ok(userService.deleteUserById(id));
 	}
 }

@@ -1,14 +1,14 @@
-package com.Spring.service;
+package com.spring.service;
 
 import java.util.List;
 
-import com.Spring.entity.User;
+import com.spring.entity.User;
 
 public interface IUserService {
-	
+
 	public User createUser(User user);
-	public List<User> listAll();
-	public User findUser(Long id);
-	public String updateUser(Long id,User user);
-	public String deleteUser(Long id);
+	public List<User> findAllUsers();
+	public User findUserById(int id);
+	public String updateUser(int id,User user);
+	public String deleteUserById(int id);
 }

@@ -1,30 +1,77 @@
-package com.Spring.entity;
+package com.spring.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
-@Table(name="User_Data")
-@AllArgsConstructor
-@NoArgsConstructor
-@Setter
-@Getter
+@Table(name="User")
 public class User {
-	
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long id;
+	private int id;
 	private String name;
 	private String email;
-	private Long contact;
+	private String contact;
 	private String addrs;
-	private String role;
+	
+	
+	public User() {
+		System.out.println("User class loaded...");
+	}
 
+
+	public int getId() {
+		return id;
+	}
+
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
+	public String getName() {
+		return name;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+	public String getEmail() {
+		return email;
+	}
+
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+
+	public String getContact() {
+		return contact;
+	}
+
+
+	public void setContact(String contact) {
+		this.contact = contact;
+	}
+
+
+	public String getAddrs() {
+		return addrs;
+	}
+
+
+	public void setAddrs(String addrs) {
+		this.addrs = addrs;
+	}
+	
+	
 }

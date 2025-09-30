@@ -1,4 +1,4 @@
-package com.Spring.service;
+package com.spring.service;
 
 import java.util.List;
 import java.util.Optional;
@@ -6,14 +6,14 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.Spring.entity.User;
-import com.Spring.repo.IUserRepo;
+import com.spring.entity.User;
+import com.spring.repo.IUserRepo;
 
 @Service
 public class UserServiceImpl implements IUserService{
 	
 	@Autowired
-	public IUserRepo userRepo;
+	private IUserRepo userRepo;
 
 	@Override
 	public User createUser(User user) {
@@ -21,36 +21,35 @@ public class UserServiceImpl implements IUserService{
 	}
 
 	@Override
-	public List<User> listAll() {
+	public List<User> findAllUsers() {
 		return userRepo.findAll();
 	}
 
 	@Override
-	public User findUser(Long id) {
-		Optional<User> opt = userRepo.findById(id);
-		User user = null;
-		if(opt.isPresent()) 
-			 user = opt.get();
-		return  user;
-	}
-
-	@Override
-	public String updateUser(Long id, User user) {
-		User u = new User();
-		Optional<User> opt = userRepo.findById(id);
-		if(opt.isPresent()) {
-			u.setName(user.getName());
-			u.setAddrs(user.getAddrs());
-		}
-		userRepo.save(u);
-		return "User Updated With :"+user.getName()+" "+user.getAddrs();
+	public User findUserById(int id) {
+	return userRepo.findById(id).orElseThrow(()->new RuntimeException("User not found"));
+		
 		
 	}
 
 	@Override
-	public String  deleteUser(Long id) {
-		userRepo.deleteById(id);
-		return "User Delete With Id:"+id;
+	public String updateUser(int id, User user) {
+		User u = userRepo.findById(id).orElseThrow(()->new RuntimeException("User not found"));
+		if(u!=null) {
+			u.setName(user.getName());
+			u.setEmail(user.getEmail());
+			u.setContact(user.getContact());
+			u.setAddrs(user.getAddrs());
+			userRepo.save(u);
+		}
+		return "User Details Updated "+id;
 	}
 
+	@Override
+	public String deleteUserById(int id) {
+		userRepo.deleteById(id);
+		return "User Deleted With"+id;
+	}
+
+	
 }
